@@ -1,4 +1,4 @@
-package com.capgemini.starterkit.persistence;
+package com.capgemini.starterkit2.persistence;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

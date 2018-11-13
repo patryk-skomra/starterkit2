@@ -1,5 +1,6 @@
 package com.capgemini.starterkit2.persistence.entity;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -10,7 +11,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 @Entity
 @Table(name = "BUILDING")
@@ -19,6 +23,13 @@ public class BuildingEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	@Version
+	private Long version;
+
+	private LocalDateTime createDate;
+
+	private LocalDateTime updateDate;
 
 	private String description;
 
@@ -94,4 +105,30 @@ public class BuildingEntity {
 		this.apartments = apartments;
 	}
 
+	public LocalDateTime getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(LocalDateTime createDate) {
+		this.createDate = createDate;
+	}
+
+	public LocalDateTime getUpdateDate() {
+		return updateDate;
+	}
+
+	public void setUpdateDate(LocalDateTime updateDate) {
+		this.updateDate = updateDate;
+	}
+
+	@PrePersist
+	public void createDate() {
+		this.createDate = LocalDateTime.now();
+		this.updateDate = createDate;
+	}
+
+	@PreUpdate
+	public void updateDate() {
+		this.updateDate = LocalDateTime.now();
+	}
 }

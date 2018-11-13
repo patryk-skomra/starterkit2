@@ -1,4 +1,4 @@
-package com.capgemini.starterkit;
+package com.capgemini.starterkit2;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

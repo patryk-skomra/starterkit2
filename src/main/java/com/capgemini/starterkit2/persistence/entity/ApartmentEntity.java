@@ -1,6 +1,7 @@
 package com.capgemini.starterkit2.persistence.entity;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,7 +12,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 @Entity
 @Table(name = "APARTMENT")
@@ -20,6 +24,13 @@ public class ApartmentEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	@Version
+	private Long version;
+
+	private LocalDateTime createDate;
+
+	private LocalDateTime updateDate;
 
 	@Column(nullable = false)
 	private Double area;
@@ -108,4 +119,30 @@ public class ApartmentEntity {
 		this.customer = customer;
 	}
 
+	public LocalDateTime getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(LocalDateTime createDate) {
+		this.createDate = createDate;
+	}
+
+	public LocalDateTime getUpdateDate() {
+		return updateDate;
+	}
+
+	public void setUpdateDate(LocalDateTime updateDate) {
+		this.updateDate = updateDate;
+	}
+
+	@PrePersist
+	public void createDate() {
+		this.createDate = LocalDateTime.now();
+		this.updateDate = createDate;
+	}
+
+	@PreUpdate
+	public void updateDate() {
+		this.updateDate = LocalDateTime.now();
+	}
 }
