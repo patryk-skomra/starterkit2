@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,14 +16,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.capgemini.starterkit2.persistence.entity.CompanyEntity;
 import com.capgemini.starterkit2.persistence.entity.CustomerEntity;
 import com.capgemini.starterkit2.persistence.entity.PersonEntity;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
-public class CustomerQueriesTest {
+public class PersonQueriesTest {
 
 	@PersistenceContext
 	private EntityManager manager;
@@ -37,35 +37,30 @@ public class CustomerQueriesTest {
 
 		CustomerEntity customer3 = createPerson("Maria", "Nowak", "7654321");
 		manager.persist(customer3);
-
-		CustomerEntity customer4 = createCompany("Cap", "123-321", "7654321");
-		manager.persist(customer4);
 	}
 
 	@Test
-	public void shouldFindAllCustomer() {
+	public void shouldFindCustomerByLastName() {
 		// when
-		List<CustomerEntity> result = manager.createNamedQuery("Customer.findAll", CustomerEntity.class)
+		List<PersonEntity> result = manager.createNamedQuery("Person.findByLastName", PersonEntity.class)
+				.setParameter("lastName", "Kowalski")
 				.getResultList();
 
 		// then
-		assertThat(result).hasSize(4);
-		assertThat(result.stream().filter(PersonEntity.class::isInstance).count()).isEqualTo(3);
-		assertThat(result.stream().filter(CompanyEntity.class::isInstance).count()).isEqualTo(1);
+		assertThat(result).hasSize(2);
+		assertThat(result.stream().map(c -> c.getLastName()).distinct().collect(Collectors.toList())).hasSize(1);
+		assertThat(result.stream().map(c -> c.getLastName()).findAny().get()).isEqualTo("Kowalski");
 	}
 
 	@Test
-	public void shouldFindCustomerById() {
-		// given
-		CustomerEntity customer = createPerson("Anna", "Kwiatkowska", "9753246");
-		manager.persist(customer);
-
+	public void shouldNotFindCustomerByLastName() {
 		// when
-		CustomerEntity result = manager.find(CustomerEntity.class, customer.getId());
+		List<PersonEntity> result = manager.createNamedQuery("Person.findByLastName", PersonEntity.class)
+				.setParameter("lastName", "Kwiatkowski")
+				.getResultList();
 
 		// then
-		assertThat(result).isNotNull();
-		assertThat(result.getId()).isEqualTo(customer.getId());
+		assertThat(result).hasSize(0);
 	}
 
 	private CustomerEntity createPerson(String firstName, String lastName, String telephoneNrumber) {
@@ -76,14 +71,5 @@ public class CustomerQueriesTest {
 		person.setTelephoneNrumber(telephoneNrumber);
 		person.setDateOfBirth(LocalDateTime.now().minusYears(20));
 		return person;
-	}
-
-	private CompanyEntity createCompany(String name, String nip, String telephoneNrumber) {
-		CompanyEntity company = new CompanyEntity();
-		company.setNip(nip);
-		company.setName(name);
-		company.setEmail(name + "@.st.com");
-		company.setTelephoneNrumber(telephoneNrumber);
-		return company;
 	}
 }
