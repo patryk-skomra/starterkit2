@@ -1,4 +1,4 @@
-package com.capgemini.starterkit2.repo;
+package com.capgemini.starterkit2.persistence.repo;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

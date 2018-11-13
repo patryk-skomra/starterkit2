@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.capgemini.starterkit2.persistence.entity.CompanyEntity;
 import com.capgemini.starterkit2.persistence.entity.CustomerEntity;
 import com.capgemini.starterkit2.persistence.entity.PersonEntity;
-import com.capgemini.starterkit2.repo.CustomerRepo;
+import com.capgemini.starterkit2.persistence.repo.CustomerRepo;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

@@ -1,4 +1,4 @@
-package com.capgemini.starterkit2.repo.impl;
+package com.capgemini.starterkit2.persistence.repo.impl;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import javax.persistence.PersistenceContext;
 
 import com.capgemini.starterkit2.persistence.entity.CustomerEntity;
 import com.capgemini.starterkit2.persistence.entity.QCustomerEntity;
-import com.capgemini.starterkit2.repo.CustomerRepoCustom;
+import com.capgemini.starterkit2.persistence.repo.CustomerRepoCustom;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 public class CustomerRepoCustomImpl implements CustomerRepoCustom {

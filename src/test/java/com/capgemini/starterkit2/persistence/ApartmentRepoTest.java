@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.capgemini.starterkit2.persistence.entity.ApartmentEntity;
 import com.capgemini.starterkit2.persistence.entity.Status;
-import com.capgemini.starterkit2.repo.ApartmentRepo;
+import com.capgemini.starterkit2.persistence.repo.ApartmentRepo;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
