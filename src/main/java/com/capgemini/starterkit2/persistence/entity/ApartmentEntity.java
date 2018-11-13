@@ -1,4 +1,4 @@
-package com.capgemini.starterkit.persistence.entity;
+package com.capgemini.starterkit2.persistence.entity;
 
 import java.math.BigDecimal;
 
