@@ -73,7 +73,7 @@ public class CustomerQueriesTest {
 		person.setFirstName(firstName);
 		person.setLastName(lastName);
 		person.setEmail(firstName + lastName + "@.st.com");
-		person.setTelephoneNrumber(telephoneNrumber);
+		person.setTelephoneNumber(telephoneNrumber);
 		person.setDateOfBirth(LocalDateTime.now().minusYears(20));
 		return person;
 	}
@@ -83,7 +83,7 @@ public class CustomerQueriesTest {
 		company.setNip(nip);
 		company.setName(name);
 		company.setEmail(name + "@.st.com");
-		company.setTelephoneNrumber(telephoneNrumber);
+		company.setTelephoneNumber(telephoneNrumber);
 		return company;
 	}
 }
