@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
@@ -141,4 +143,14 @@ public class PatientEntity {
 		this.dateOfBirth = dateOfBirth;
 	}
 
+	@PrePersist
+	public void createDate() {
+		this.createDate = LocalDateTime.now();
+		this.updateDate = createDate;
+	}
+
+	@PreUpdate
+	public void updateDate() {
+		this.updateDate = LocalDateTime.now();
+	}
 }

@@ -9,6 +9,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
@@ -81,4 +83,14 @@ public class MedicalTreatmentEntity {
 		this.type = type;
 	}
 
+	@PrePersist
+	public void createDate() {
+		this.createDate = LocalDateTime.now();
+		this.updateDate = createDate;
+	}
+
+	@PreUpdate
+	public void updateDate() {
+		this.updateDate = LocalDateTime.now();
+	}
 }

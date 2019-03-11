@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
@@ -119,4 +121,14 @@ public class VisitEntity {
 		this.patient = patient;
 	}
 
+	@PrePersist
+	public void createDate() {
+		this.createDate = LocalDateTime.now();
+		this.updateDate = createDate;
+	}
+
+	@PreUpdate
+	public void updateDate() {
+		this.updateDate = LocalDateTime.now();
+	}
 }
