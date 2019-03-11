@@ -1,16 +1,15 @@
 package com.capgemini.starterkit2.persistence;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDate;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,53 +18,50 @@ import com.capgemini.starterkit2.persistence.entity.DoctorEntity;
 import com.capgemini.starterkit2.persistence.entity.PatientEntity;
 import com.capgemini.starterkit2.persistence.entity.PersonEntity;
 import com.capgemini.starterkit2.persistence.entity.Specialization;
+import com.capgemini.starterkit2.persistence.repo.PersonRepo;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
-public class PersonQueriesTest {
+public class PersonRepoTest {
 
-	@PersistenceContext
-	private EntityManager manager;
+	@Autowired
+	private PersonRepo repo;
 
 	@Before
 	public void loadData() {
 		PersonEntity person1 = createPatient("Jan", "Kowalski", "1234567", "P-123", LocalDate.now().minusYears(20));
-		manager.persist(person1);
+		repo.save(person1);
 
 		PersonEntity person2 = createPatient("Marcin", "Kowalski", "9871236", "P-124", LocalDate.now().minusYears(15));
-		manager.persist(person2);
+		repo.save(person2);
 
 		PersonEntity person3 = createPatient("Maria", "Nowak", "7654321", "P-125", LocalDate.now().minusYears(35));
-		manager.persist(person3);
+		repo.save(person3);
 
 		PersonEntity person4 = createDoctor("Cap", "123-321", "7654321", "D-321", Specialization.GP);
-		manager.persist(person4);
+		repo.save(person4);
 	}
 
 	@Test
-	public void shouldFindAllPersons() {
+	public void shouldFindByTelephoneNumber() {
+
 		// when
-		List<PersonEntity> result = manager.createNamedQuery("Person.findAll", PersonEntity.class).getResultList();
+		List<PersonEntity> result = repo.findByTelephoneNumber("7654321");
 
 		// then
-		assertThat(result).hasSize(4);
-		assertThat(result.stream().filter(PatientEntity.class::isInstance).count()).isEqualTo(3);
-		assertThat(result.stream().filter(DoctorEntity.class::isInstance).count()).isEqualTo(1);
+		assertThat(result).hasSize(2);
+		assertTrue(result.stream().allMatch(c -> c.getTelephoneNumber().equals("7654321")));
 	}
 
 	@Test
-	public void shouldFindPersonById() {
-		// given
-		PersonEntity person = createPatient("Anna", "Kwiatkowska", "9753246", "P-123", LocalDate.now().minusYears(20));
-		manager.persist(person);
+	public void shouldNotFindByTelephoneNumber() {
 
 		// when
-		PersonEntity result = manager.find(PersonEntity.class, person.getId());
+		List<PersonEntity> result = repo.findByTelephoneNumber("7654321321");
 
 		// then
-		assertThat(result).isNotNull();
-		assertThat(result.getId()).isEqualTo(person.getId());
+		assertThat(result).hasSize(0);
 	}
 
 	private PatientEntity createPatient(String firstName, String lastName, String telephoneNumber, String patientNumber,
@@ -93,4 +89,5 @@ public class PersonQueriesTest {
 		doctor.setDoctorNumber(doctorNumber);
 		return doctor;
 	}
+
 }

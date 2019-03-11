@@ -1,21 +1,20 @@
 package com.capgemini.starterkit2.persistence.entity;
 
-import java.time.LocalDateTime;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-@NamedQueries({
-		@NamedQuery(name = "Person.findByLastName", query = "SELECT p FROM PersonEntity p WHERE p.lastName = :lastName")
-})
+@NamedQueries({ @NamedQuery(name = "Person.findAll", query = "SELECT c FROM PersonEntity c") })
 @Entity
 @Table(name = "PERSON")
-@PrimaryKeyJoinColumn(name = "person_id", referencedColumnName = "id")
-public class PersonEntity extends CustomerEntity {
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class PersonEntity extends AbstractEntity {
 
 	@Column(nullable = false)
 	private String firstName;
@@ -23,7 +22,38 @@ public class PersonEntity extends CustomerEntity {
 	@Column(nullable = false)
 	private String lastName;
 
-	private LocalDateTime dateOfBirth;
+	@Column(nullable = false)
+	private String telephoneNumber;
+
+	private String email;
+
+	@OneToOne
+	@JoinColumn(name = "ADDRESS_ID")
+	private AddressEntity address;
+
+	public AddressEntity getAddress() {
+		return address;
+	}
+
+	public void setAddress(AddressEntity address) {
+		this.address = address;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getTelephoneNumber() {
+		return telephoneNumber;
+	}
+
+	public void setTelephoneNumber(String telephoneNumber) {
+		this.telephoneNumber = telephoneNumber;
+	}
 
 	public String getFirstName() {
 		return firstName;
@@ -39,14 +69,6 @@ public class PersonEntity extends CustomerEntity {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
-	}
-
-	public LocalDateTime getDateOfBirth() {
-		return dateOfBirth;
-	}
-
-	public void setDateOfBirth(LocalDateTime dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
 	}
 
 }
