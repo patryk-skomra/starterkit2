@@ -4,9 +4,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+@NamedQueries({ @NamedQuery(name = "Doctor.findAll", query = "SELECT d FROM DoctorEntity d") })
 @Entity
 @Table(name = "DOCTOR")
 @PrimaryKeyJoinColumn(name = "doctor_id", referencedColumnName = "id")
