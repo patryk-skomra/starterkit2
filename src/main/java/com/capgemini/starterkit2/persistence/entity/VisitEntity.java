@@ -6,14 +6,29 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 @Entity
 @Table(name = "VISIT")
-public class VisitEntity extends AbstractEntity {
+public class VisitEntity {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
+	@Version
+	private Long version;
+
+	private LocalDateTime createDate;
+
+	private LocalDateTime updateDate;
 
 	private String description;
 
@@ -31,6 +46,38 @@ public class VisitEntity extends AbstractEntity {
 	@ManyToOne
 	@JoinColumn(name = "PATIENT_ID")
 	private PatientEntity patient;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Long getVersion() {
+		return version;
+	}
+
+	public void setVersion(Long version) {
+		this.version = version;
+	}
+
+	public LocalDateTime getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(LocalDateTime createDate) {
+		this.createDate = createDate;
+	}
+
+	public LocalDateTime getUpdateDate() {
+		return updateDate;
+	}
+
+	public void setUpdateDate(LocalDateTime updateDate) {
+		this.updateDate = updateDate;
+	}
 
 	public String getDescription() {
 		return description;

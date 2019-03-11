@@ -17,7 +17,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.capgemini.starterkit2.persistence.entity.PatientEntity;
-import com.capgemini.starterkit2.persistence.entity.PersonEntity;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -29,14 +28,15 @@ public class PatientQueriesTest {
 
 	@Before
 	public void loadData() {
-		PersonEntity person1 = createPatient("Jan", "Kowalski", "1234567", "P-123", LocalDate.now().minusYears(20));
-		manager.persist(person1);
+		PatientEntity patient1 = createPatient("Jan", "Kowalski", "1234567", "P-123", LocalDate.now().minusYears(20));
+		manager.persist(patient1);
 
-		PersonEntity person2 = createPatient("Marcin", "Kowalski", "9871236", "P-124", LocalDate.now().minusYears(15));
-		manager.persist(person2);
+		PatientEntity patient2 = createPatient("Marcin", "Kowalski", "9871236", "P-124",
+				LocalDate.now().minusYears(15));
+		manager.persist(patient2);
 
-		PersonEntity person3 = createPatient("Maria", "Nowak", "7654321", "P-125", LocalDate.now().minusYears(35));
-		manager.persist(person3);
+		PatientEntity patient3 = createPatient("Maria", "Nowak", "7654321", "P-125", LocalDate.now().minusYears(35));
+		manager.persist(patient3);
 	}
 
 	@Test
