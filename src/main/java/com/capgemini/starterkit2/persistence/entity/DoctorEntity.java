@@ -1,7 +1,5 @@
 package com.capgemini.starterkit2.persistence.entity;
 
-import java.time.LocalDateTime;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -14,7 +12,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Version;
 
 @NamedQueries({ @NamedQuery(name = "Doctor.findAll", query = "SELECT d FROM DoctorEntity d") })
 @Entity
@@ -24,13 +21,6 @@ public class DoctorEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
-	@Version
-	private Long version;
-
-	private LocalDateTime createDate;
-
-	private LocalDateTime updateDate;
 
 	@Column(nullable = false)
 	private String firstName;
@@ -60,30 +50,6 @@ public class DoctorEntity {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Long getVersion() {
-		return version;
-	}
-
-	public void setVersion(Long version) {
-		this.version = version;
-	}
-
-	public LocalDateTime getCreateDate() {
-		return createDate;
-	}
-
-	public void setCreateDate(LocalDateTime createDate) {
-		this.createDate = createDate;
-	}
-
-	public LocalDateTime getUpdateDate() {
-		return updateDate;
-	}
-
-	public void setUpdateDate(LocalDateTime updateDate) {
-		this.updateDate = updateDate;
 	}
 
 	public String getFirstName() {
