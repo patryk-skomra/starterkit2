@@ -2,6 +2,8 @@ package com.capgemini.starterkit2.persistence.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Table;
 
 @Entity
@@ -11,6 +13,7 @@ public class MedicalTreatmentEntity extends AbstractEntity {
 	@Column(nullable = false)
 	private String description;
 
+	@Enumerated(EnumType.STRING)
 	private TreatmentType type;
 
 	public String getDescription() {

@@ -4,13 +4,9 @@ import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
-@NamedQueries({
-		@NamedQuery(name = "Patient.findByLastName", query = "SELECT p FROM PatientEntity p WHERE p.lastName = :lastName") })
 @Entity
 @Table(name = "PATIENT")
 @PrimaryKeyJoinColumn(name = "patient_id", referencedColumnName = "id")
