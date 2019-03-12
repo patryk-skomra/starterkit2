@@ -10,11 +10,11 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-@NamedQueries({ @NamedQuery(name = "Person.findAll", query = "SELECT c FROM PersonEntity c") })
+@NamedQueries({ @NamedQuery(name = "Person.findAll", query = "SELECT p FROM PersonEntity p") })
 @Entity
 @Table(name = "PERSON")
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class PersonEntity extends AbstractEntity {
+public class PersonEntity extends AbstractEntity {
 
 	@Column(nullable = false)
 	private String firstName;
