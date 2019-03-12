@@ -10,7 +10,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-@NamedQueries({ @NamedQuery(name = "Person.findAll", query = "SELECT c FROM PersonEntity c") })
+@NamedQueries({ @NamedQuery(name = "Person.findAll", query = "SELECT p FROM PersonEntity p") })
 @Entity
 @Table(name = "PERSON")
 @Inheritance(strategy = InheritanceType.JOINED)
