@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "PERSON")
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class PersonEntity extends AbstractEntity {
+public class PersonEntity extends AbstractEntity {
 
 	@Column(nullable = false)
 	private String firstName;
